@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[有限差分模拟二维地震波传播]]></title>
+    <url>%2F2017%2F05%2F04%2F2DFD%2F</url>
+    <content type="text"><![CDATA[前言好久之前在CSDN上写的博客，现在搬过来… 在Ubuntu上做波场计算，但是每次都要放到MATLAB上显示，尤其是想要连续查看波场快照时候很多数据看完也没有用了，于是便用OPENGL做显示. 实现过程 1 首先确保OPENGL库应该是安装好的，如果没有安装，执行下面的命令： 1$ sudo apt-get install freeglut3-dev freeglut3 2 二维有限差分代码 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143#include "stdio.h"#include "stdlib.h"#include "math.h"#include &lt;GL/glut.h&gt;#define PI 3.141592654#define Xn 300#define Zn 300#define Tn 600#define Sx 150#define Sz 150double** array_2(int x,int y);void free_2(double** m,int x,int y);void Forward();void DisplayWave(double **signal,int M,int N,double gain);int main(int argc, char *argv[])&#123; glutInit(&amp;argc, argv); glutInitDisplayMode (GLUT_DOUBLE| GLUT_RGBA|GLUT_DEPTH); glutInitWindowPosition(100,100); glutInitWindowSize(600,600); glutCreateWindow("DrawWave"); glEnable(GL_DEPTH_TEST); glDepthFunc(GL_LESS); glPolygonMode(GL_FRONT_AND_BACK,GL_FILL); glClearColor(1,1,1,1); glClearDepth(1); glutDisplayFunc(&amp;Forward); glutMainLoop(); return 0;&#125;void Forward()&#123; int i,j,k,m,n; double Delta_h,Delta_t,Is_Center,r,f,alpha,beta1,beta2,A,gain; double **u0,**u1,**u2,**v,*ricker; u0 = array_2(Xn,Zn);//上一时刻波场值 u1 = array_2(Xn,Zn);//当前时刻波场值 u2 = array_2(Xn,Zn);//下一时刻波场值 v = array_2(Xn,Zn);//速度 ricker = (double*)calloc(Tn,sizeof(double));//雷克子波离散值 //-----------------数据初始化-------------// Delta_h = 5; Delta_t = 0.001; Is_Center = 0; r = 3.7; f = 20; gain=0.01; //---------------速度赋初值---------------// for(i=0;i&lt;Xn;i++) for(j=0;j&lt;Zn;j++) &#123; v[i][j]=1000.0; &#125; //---------------波场计算------------------// for(k=1;k&lt;Tn;k++) &#123; //----------雷克子波离散值------------// ricker[k] = exp((-4*PI*PI*f*f*(k-200)*(k-200)*Delta_t*Delta_t)/(r*r))*cos(2*PI*f*Delta_t*(k-200)); DisplayWave(u1,Xn,Zn,gain); for(i=2;i&lt;Xn-2;i++) for(j=2;j&lt;Zn-2;j++) &#123; Is_Center=0.0; if(i==Sx&amp;&amp;j==Sz) Is_Center=1.0; /* 场值计算 */ alpha= (v[i][j]*v[i][j]*Delta_t*Delta_t)/(Delta_h*Delta_h); beta1= (-1/12.0)*(u1[i-2][j]+u1[i+2][j])+(4.0/3)*(u1[i-1][j]+u1[i+1][j])-(5/2.0)*u1[i][j]; beta2= (-1/12.0)*(u1[i][j-2]+u1[i][j+2])+(4.0/3)*(u1[i][j-1]+u1[i][j+1])-(5/2.0)*u1[i][j]; u2[i][j] = 2*u1[i][j]-u0[i][j]+alpha*(beta1+beta2)+ricker[k]*Is_Center; &#125; for(m=2;m&lt;Xn-2;m++) for(n=2;n&lt;Zn-2;n++) &#123; u0[m][n]=u1[m][n]; u1[m][n]=u2[m][n]; &#125; &#125; free_2(u0,Xn,Zn); free_2(u1,Xn,Zn); free_2(u2,Xn,Zn); free(ricker); free_2(v,Xn,Zn);&#125;double** array_2(int x,int y)&#123; double **m; int i; m=(double **)calloc(x,sizeof(double*)); for(i=0;i&lt;x;i++) &#123; m[i]=(double*)calloc(y,sizeof(double)); &#125; return m;&#125;void free_2(double** m,int x,int y)&#123; int i; for(i=0;i&lt;x;i++) free(m[i]); free(m);&#125;void DisplayWave(double **signal,int M,int N,double gain)&#123; int i,j,k; double x,y,z,t; glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //X-O-Z glColor3f(1.0f, 0.0f, 0.0f); for(i=0;i&lt;M;i++) &#123; x=i*(2.0/M)-1.0; glBegin(GL_LINE_STRIP); for(k=0;k&lt;N;k++) &#123; t=signal[i][k]/1.0; z=(2.0f*k)/(1.0f*N)-1; glVertex2f(x+t*gain,z); &#125; glEnd(); &#125; glFlush(); glutSwapBuffers();&#125; 参数说明：Xn表示水平方向的网格点数Zn表示垂直方向的网格点数Tn是时间上的网格点数Sx和Sz则分别表示震源在网格中的位置空间采样间隔用Delta_h表示，取 5m时间采样间隔用Delta_t表示，取0.001s震源为雷克型子波，主频20Hz，相位控制参数为3.7 3 最后使用make编译上述代码，生成可执行文件,makefile内容如下： 12345678wave: wave.o gcc -o wave wave.o -lglut -lm wave.o: wave.c gcc -c wave.c clean: rm -f *.o 4 结果如图所示 2D波场]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>有限差分</tag>
+        <tag>地震波模拟</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Welcome to HH]]></title>
     <url>%2F2017%2F05%2F04%2Fwelcome%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[搞了一天，终于把博客配置好啦！ 继续努力…]]></content>
       <categories>
         <category>闲言碎语</category>
       </categories>
       <tags>
         <tag>welcome</tag>
       </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2017%2F01%2F01%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
   </entry>
 </search>

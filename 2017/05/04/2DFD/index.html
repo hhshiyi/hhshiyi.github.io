@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="welcome" />
+  <meta name="keywords" content="有限差分,地震波模拟" />
 
 
 
@@ -90,17 +90,19 @@
 
 
 
-<meta name="description" content="搞了一天，终于把博客配置好啦！ 继续努力…">
-<meta name="keywords" content="welcome">
+<meta name="description" content="前言好久之前在CSDN上写的博客，现在搬过来… 在Ubuntu上做波场计算，但是每次都要放到MATLAB上显示，尤其是想要连续查看波场快照时候很多数据看完也没有用了，于是便用OPENGL做显示. 实现过程 1 首先确保OPENGL库应该是安装好的，如果没有安装，执行下面的命令： 1$ sudo apt-get install freeglut3-dev freeglut3  2 二维有限差分代码">
+<meta name="keywords" content="有限差分,地震波模拟">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Welcome to HH">
-<meta property="og:url" content="http://yoursite.com/2017/05/04/welcome/index.html">
+<meta property="og:title" content="有限差分模拟二维地震波传播">
+<meta property="og:url" content="http://yoursite.com/2017/05/04/2DFD/index.html">
 <meta property="og:site_name" content="HH">
-<meta property="og:description" content="搞了一天，终于把博客配置好啦！ 继续努力…">
-<meta property="og:updated_time" content="2017-05-04T08:34:08.457Z">
+<meta property="og:description" content="前言好久之前在CSDN上写的博客，现在搬过来… 在Ubuntu上做波场计算，但是每次都要放到MATLAB上显示，尤其是想要连续查看波场快照时候很多数据看完也没有用了，于是便用OPENGL做显示. 实现过程 1 首先确保OPENGL库应该是安装好的，如果没有安装，执行下面的命令： 1$ sudo apt-get install freeglut3-dev freeglut3  2 二维有限差分代码">
+<meta property="og:image" content="http://yoursite.com/2017/05/04/2DFD/1.png">
+<meta property="og:updated_time" content="2017-05-04T08:33:51.561Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Welcome to HH">
-<meta name="twitter:description" content="搞了一天，终于把博客配置好啦！ 继续努力…">
+<meta name="twitter:title" content="有限差分模拟二维地震波传播">
+<meta name="twitter:description" content="前言好久之前在CSDN上写的博客，现在搬过来… 在Ubuntu上做波场计算，但是每次都要放到MATLAB上显示，尤其是想要连续查看波场快照时候很多数据看完也没有用了，于是便用OPENGL做显示. 实现过程 1 首先确保OPENGL库应该是安装好的，如果没有安装，执行下面的命令： 1$ sudo apt-get install freeglut3-dev freeglut3  2 二维有限差分代码">
+<meta name="twitter:image" content="http://yoursite.com/2017/05/04/2DFD/1.png">
 
 
 
@@ -128,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/05/04/welcome/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/04/2DFD/"/>
 
 
 
 
 
-  <title>Welcome to HH | HH</title>
+  <title>有限差分模拟二维地震波传播 | HH</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -307,7 +309,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/04/welcome/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/04/2DFD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="HH">
@@ -324,7 +326,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Welcome to HH</h1>
+          <h1 class="post-title" itemprop="name headline">有限差分模拟二维地震波传播</h1>
         
 
         <div class="post-meta">
@@ -359,8 +361,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/闲言碎语/" itemprop="url" rel="index">
-                    <span itemprop="name">闲言碎语</span>
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
                   </a>
                 </span>
 
@@ -393,8 +395,26 @@
       
 
       
-        <p>搞了一天，终于把博客配置好啦！</p>
-<p>继续努力…</p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>好久之前在CSDN上写的博客，现在搬过来…</p>
+<p>在Ubuntu上做波场计算，但是每次都要放到MATLAB上显示，尤其是想要连续查看波场快照时候很多数据看完也没有用了，于是便用OPENGL做显示.</p>
+<h1 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h1><ul>
+<li><p>1 首先确保OPENGL库应该是安装好的，如果没有安装，执行下面的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo apt-get install freeglut3-dev freeglut3</div></pre></td></tr></table></figure>
+</li>
+<li><p>2 二维有限差分代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdlib.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"math.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;GL/glut.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span>  PI  3.141592654</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span>  Xn  300</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span>  Zn  300</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span>  Tn  600</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span>  Sx  150</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span>  Sz  150</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">double</span>** <span class="title">array_2</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">free_2</span><span class="params">(<span class="keyword">double</span>** m,<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Forward</span><span class="params">()</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">DisplayWave</span><span class="params">(<span class="keyword">double</span> **signal,<span class="keyword">int</span> M,<span class="keyword">int</span> N,<span class="keyword">double</span> gain)</span></span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></div><div class="line">&#123;</div><div class="line">    glutInit(&amp;argc, argv);</div><div class="line">    glutInitDisplayMode (GLUT_DOUBLE| GLUT_RGBA|GLUT_DEPTH);</div><div class="line">    glutInitWindowPosition(<span class="number">100</span>,<span class="number">100</span>);</div><div class="line">    glutInitWindowSize(<span class="number">600</span>,<span class="number">600</span>);</div><div class="line">    glutCreateWindow(<span class="string">"DrawWave"</span>);</div><div class="line"></div><div class="line">    glEnable(GL_DEPTH_TEST);</div><div class="line">    glDepthFunc(GL_LESS);</div><div class="line">    glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);</div><div class="line">    glClearColor(<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>);</div><div class="line">    glClearDepth(<span class="number">1</span>);</div><div class="line"></div><div class="line">    glutDisplayFunc(&amp;Forward);</div><div class="line">    glutMainLoop();</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Forward</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> i,j,k,m,n;</div><div class="line">    <span class="keyword">double</span> Delta_h,Delta_t,Is_Center,r,f,alpha,beta1,beta2,A,gain;</div><div class="line"></div><div class="line">    <span class="keyword">double</span> **u0,**u1,**u2,**v,*ricker;</div><div class="line"></div><div class="line">    u0 = array_2(Xn,Zn);<span class="comment">//上一时刻波场值</span></div><div class="line">    u1 = array_2(Xn,Zn);<span class="comment">//当前时刻波场值</span></div><div class="line">    u2 = array_2(Xn,Zn);<span class="comment">//下一时刻波场值</span></div><div class="line">    v  = array_2(Xn,Zn);<span class="comment">//速度</span></div><div class="line">    ricker = (<span class="keyword">double</span>*)<span class="built_in">calloc</span>(Tn,<span class="keyword">sizeof</span>(<span class="keyword">double</span>));<span class="comment">//雷克子波离散值</span></div><div class="line"></div><div class="line">    <span class="comment">//-----------------数据初始化-------------//</span></div><div class="line">    Delta_h = <span class="number">5</span>;</div><div class="line">    Delta_t = <span class="number">0.001</span>;</div><div class="line">    Is_Center = <span class="number">0</span>;</div><div class="line">    r = <span class="number">3.7</span>;</div><div class="line">    f = <span class="number">20</span>;</div><div class="line">    gain=<span class="number">0.01</span>;</div><div class="line"></div><div class="line">    <span class="comment">//---------------速度赋初值---------------//</span></div><div class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;Xn;i++)</div><div class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;Zn;j++)</div><div class="line">        &#123;</div><div class="line">            v[i][j]=<span class="number">1000.0</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    <span class="comment">//---------------波场计算------------------//</span></div><div class="line">    <span class="keyword">for</span>(k=<span class="number">1</span>;k&lt;Tn;k++)</div><div class="line">    &#123;</div><div class="line">        <span class="comment">//----------雷克子波离散值------------//</span></div><div class="line">        ricker[k] = <span class="built_in">exp</span>((<span class="number">-4</span>*PI*PI*f*f*(k<span class="number">-200</span>)*(k<span class="number">-200</span>)*Delta_t*Delta_t)/(r*r))*<span class="built_in">cos</span>(<span class="number">2</span>*PI*f*Delta_t*(k<span class="number">-200</span>));</div><div class="line">        DisplayWave(u1,Xn,Zn,gain);</div><div class="line">        <span class="keyword">for</span>(i=<span class="number">2</span>;i&lt;Xn<span class="number">-2</span>;i++)</div><div class="line">            <span class="keyword">for</span>(j=<span class="number">2</span>;j&lt;Zn<span class="number">-2</span>;j++)</div><div class="line">            &#123;</div><div class="line">                Is_Center=<span class="number">0.0</span>;</div><div class="line">                <span class="keyword">if</span>(i==Sx&amp;&amp;j==Sz) Is_Center=<span class="number">1.0</span>;</div><div class="line"></div><div class="line">                <span class="comment">/* 场值计算 */</span></div><div class="line">                alpha= (v[i][j]*v[i][j]*Delta_t*Delta_t)/(Delta_h*Delta_h);</div><div class="line">                beta1= (<span class="number">-1</span>/<span class="number">12.0</span>)*(u1[i<span class="number">-2</span>][j]+u1[i+<span class="number">2</span>][j])+(<span class="number">4.0</span>/<span class="number">3</span>)*(u1[i<span class="number">-1</span>][j]+u1[i+<span class="number">1</span>][j])-(<span class="number">5</span>/<span class="number">2.0</span>)*u1[i][j];</div><div class="line">                beta2= (<span class="number">-1</span>/<span class="number">12.0</span>)*(u1[i][j<span class="number">-2</span>]+u1[i][j+<span class="number">2</span>])+(<span class="number">4.0</span>/<span class="number">3</span>)*(u1[i][j<span class="number">-1</span>]+u1[i][j+<span class="number">1</span>])-(<span class="number">5</span>/<span class="number">2.0</span>)*u1[i][j];</div><div class="line">                u2[i][j] = <span class="number">2</span>*u1[i][j]-u0[i][j]+alpha*(beta1+beta2)+ricker[k]*Is_Center;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        <span class="keyword">for</span>(m=<span class="number">2</span>;m&lt;Xn<span class="number">-2</span>;m++)</div><div class="line">            <span class="keyword">for</span>(n=<span class="number">2</span>;n&lt;Zn<span class="number">-2</span>;n++)</div><div class="line">            &#123;</div><div class="line">                u0[m][n]=u1[m][n];</div><div class="line">                u1[m][n]=u2[m][n];</div><div class="line">            &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    free_2(u0,Xn,Zn);</div><div class="line">    free_2(u1,Xn,Zn);</div><div class="line">    free_2(u2,Xn,Zn);</div><div class="line">    <span class="built_in">free</span>(ricker);</div><div class="line">    free_2(v,Xn,Zn);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">double</span>** <span class="title">array_2</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">double</span> **m;</div><div class="line">    <span class="keyword">int</span> i;</div><div class="line">    m=(<span class="keyword">double</span> **)<span class="built_in">calloc</span>(x,<span class="keyword">sizeof</span>(<span class="keyword">double</span>*));</div><div class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;x;i++)</div><div class="line">    &#123;</div><div class="line">        m[i]=(<span class="keyword">double</span>*)<span class="built_in">calloc</span>(y,<span class="keyword">sizeof</span>(<span class="keyword">double</span>));</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> m;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">free_2</span><span class="params">(<span class="keyword">double</span>** m,<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> i;</div><div class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;x;i++)</div><div class="line">        <span class="built_in">free</span>(m[i]);</div><div class="line">    <span class="built_in">free</span>(m);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">DisplayWave</span><span class="params">(<span class="keyword">double</span> **signal,<span class="keyword">int</span> M,<span class="keyword">int</span> N,<span class="keyword">double</span> gain)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> i,j,k;</div><div class="line">    <span class="keyword">double</span> x,y,z,t;</div><div class="line">    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);</div><div class="line"></div><div class="line">    <span class="comment">//X-O-Z</span></div><div class="line">    glColor3f(<span class="number">1.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>);</div><div class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;M;i++)</div><div class="line">    &#123;</div><div class="line">        x=i*(<span class="number">2.0</span>/M)<span class="number">-1.0</span>;</div><div class="line">        glBegin(GL_LINE_STRIP);</div><div class="line">        <span class="keyword">for</span>(k=<span class="number">0</span>;k&lt;N;k++)</div><div class="line">        &#123;</div><div class="line">            t=signal[i][k]/<span class="number">1.0</span>;</div><div class="line">            z=(<span class="number">2.0f</span>*k)/(<span class="number">1.0f</span>*N)<span class="number">-1</span>;</div><div class="line">            glVertex2f(x+t*gain,z);</div><div class="line">        &#125;</div><div class="line">        glEnd();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    glFlush();</div><div class="line">    glutSwapBuffers();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>参数说明：<br>Xn表示水平方向的网格点数<br>Zn表示垂直方向的网格点数<br>Tn是时间上的网格点数<br>Sx和Sz则分别表示震源在网格中的位置<br>空间采样间隔用Delta_h表示，取 5m<br>时间采样间隔用Delta_t表示，取0.001s<br>震源为雷克型子波，主频20Hz，相位控制参数为3.7</p>
+<ul>
+<li><p>3 最后使用make编译上述代码，生成可执行文件,makefile内容如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">wave: wave.o  </div><div class="line">    gcc  -o wave wave.o -lglut -lm  </div><div class="line">  </div><div class="line">wave.o: wave.c  </div><div class="line">    gcc -c wave.c  </div><div class="line">  </div><div class="line">clean:  </div><div class="line">    rm <span class="_">-f</span> *.o</div></pre></td></tr></table></figure>
+</li>
+<li><p>4 结果如图所示<br><img src="/2017/05/04/2DFD/1.png" alt="2D波场"></p>
+<center> 2D波场 </center>
+
+</li>
+</ul>
 
       
     </div>
@@ -424,7 +444,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/welcome/" rel="tag"># welcome</a>
+            <a href="/tags/有限差分/" rel="tag"># 有限差分</a>
+          
+            <a href="/tags/地震波模拟/" rel="tag"># 地震波模拟</a>
           
         </div>
       
@@ -437,15 +459,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/05/04/welcome/" rel="next" title="Welcome to HH">
+                <i class="fa fa-chevron-left"></i> Welcome to HH
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/04/2DFD/" rel="prev" title="有限差分模拟二维地震波传播">
-                有限差分模拟二维地震波传播 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -492,8 +514,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -555,6 +586,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现过程"><span class="nav-number">2.</span> <span class="nav-text">实现过程</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
